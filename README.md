@@ -1,10 +1,38 @@
-# Security Explorer 0.1.1 — Windows 11 Education
+# Windows Security Settings Explorer
 
 A **read-only** graphical security inventory for Windows 11 (also usable on other compatible Windows installations). Windows PowerShell 5.1, Windows Forms, built-in Windows cmdlets, `secedit` and `auditpol`; no third-party dependencies, policy changes, network requests or downloads.
 
+Security Explorer brings policy definitions, configuration observations, and
+runtime status into a searchable interface with a separate evidence view.
+It helps answer what a source reports and what remains unknown. It does not
+turn the presence of a setting into proof of effective protection.
+
+The source identifies version **0.1.1**, with the later UI, manual-collection,
+auditing-query, and partial-inventory changes described below. This is a
+development build with recorded sample-data checks; live coverage and
+machine-specific behavior still require validation.
+
+## What a session shows
+
+Start a collection explicitly, browse the results by domain, and read the
+description alongside its source and limitations. Search and row selection use
+the displayed snapshot rather than silently repeating live collection.
+
+The interface distinguishes the latest partial inventory from the last complete
+run. Failed records stay visible as evidence. A failed or interrupted refresh
+does not silently replace a previous complete snapshot, and the GUI only
+exports a selected complete run.
+
+Here, **complete** describes the collector sequence and its failure records.
+It does not mean every possible security control was discovered or verified.
+
+**Read next:** [Start](#start) · [Sources and scope](#sources-and-scope) ·
+[Interpretation](#interpretation) · [Source map](#source-map-and-contribution) ·
+[Validation limits](#limitations-and-test-status).
+
 ## Start
 
-1. Extract the ZIP into a folder.
+1. Download or clone the repository and keep all files together.
 2. Run `Launch-SecurityExplorer.cmd` on Windows 11. This respects your machine's PowerShell execution policy. Alternatively run `powershell.exe -NoProfile -STA -File .\SecurityExplorer.ps1` from an authorized Windows PowerShell session.
 3. Click **Collect / refresh inventory** to read live data. Opening the window does not start collection. Select a category on the left and search using the top text box. Select a row to see its description and its separate evidence/reference view.
 4. Select **Export JSON** to save a sanitized local inventory. The JSON still contains sensitive information about your system's security posture. Do not upload it publicly.
@@ -86,12 +114,35 @@ The minimum widths/heights were set while WinForms was still using the split con
 
 PowerShell cmdlets may differ by Windows build, edition, policy and installed modules. No attempt is made to change machine state; `secedit /export` temporarily writes an `.inf` report under the current user's TEMP folder and deletes it after parsing. JSON export is local-only.
 
+## Source map and contribution
+
+| File | Responsibility |
+|---|---|
+| [SecurityExplorer.ps1](SecurityExplorer.ps1) | Collectors, record construction, evidence handling, collection coordination, command-line mode, and export. |
+| [SecurityExplorer_UI.ps1](SecurityExplorer_UI.ps1) | UI layout, sections, and locked rich-text controls. |
+| [Launch-SecurityExplorer.cmd](Launch-SecurityExplorer.cmd) | GUI launcher. |
+| [Export-Inventory.cmd](Export-Inventory.cmd) | Command-line inventory/export launcher. |
+| [RESEARCH_SOURCES.md](RESEARCH_SOURCES.md) | Existing source references and research notes. |
+| [FIX_NOTES.md](FIX_NOTES.md) | Historical startup/layout repair notes. |
+
+For collector changes, follow a record from the Windows source through its
+classification, display, and sanitized export. Preserve unavailable and failed
+states instead of treating them as empty success. For UI changes, use sample
+collectors and check both the normal and minimum layouts.
+
+Reports should identify the affected domain, action, and first error. Keep
+machine inventories and private identifiers out of public issues. The repository
+contains the tool's source, not a published inventory of a particular machine.
+
+No standalone project license is included. The existing source notice is
+preserved without assigning a new copyright holder.
+
 ## Limitations and test status
 
-The original package reported static Linux inspections only. This local UI increment passed Windows PowerShell 5.1.22621.7649 syntax and sample-data checks at 1350×840 and 880×560, at the session's current scaling. Checks exercised locked text selection, first-run failure, successful publication, overlap prevention, failed-refresh retention/timestamps/diagnostics, export availability and the existing splitter initialization. All live collectors were replaced with sample functions. Control geometry and native rich-text print renderings were inspected; desktop screenshot capture did not expose the isolated sample window.
+The original package reported static Linux inspections only. This local UI increment passed Windows PowerShell 5.1 syntax and sample-data checks at 1350×840 and 880×560, at the session's current scaling. Checks exercised locked text selection, first-run failure, successful publication, overlap prevention, failed-refresh retention/timestamps/diagnostics, export availability and the existing splitter initialization. All live collectors were replaced with sample functions. Control geometry and native rich-text print renderings were inspected; desktop screenshot capture did not expose the isolated sample window.
 
 **Real collection, permissions, system-provider behavior, registry semantics, other DPI settings and Windows 11 Education compatibility remain unverified.** Report errors with the domain and exact message and keep exported inventories private. The original research and startup-fix reports remain historical source documents; this UI work does not independently validate their runtime claims.
 
 For the preceding sectional UI increment, static contract comparison confirmed 25 existing function bodies, including the collectors, sanitization and export functions, and the `-InventoryOnly` branch were text-identical to the imported version. The subsequent Advanced auditing repair changes only `Collect-Audit` and its source label; the other collectors, record schema, export function and command-line entry branch remain unchanged.
 
-The partial-inventory correction was checked in Windows PowerShell 5.1.22621.7649 using two sample observations and four simulated late collector failures. Checks covered first-run partial publication, filtering without losing partial status, complete/partial switching without mixing records or timestamps, complete-only GUI export availability, overlap prevention, and unexpected interruption with and without a prior snapshot. Layouts passed at 1350×840 and 880×560. No live collectors, elevation, policy changes or full machine inventory were run for this correction. The collectors, record fields, JSON export function and command-line entry branch were preserved.
+The partial-inventory correction was checked in Windows PowerShell 5.1 using two sample observations and four simulated late collector failures. Checks covered first-run partial publication, filtering without losing partial status, complete/partial switching without mixing records or timestamps, complete-only GUI export availability, overlap prevention, and unexpected interruption with and without a prior snapshot. Layouts passed at 1350×840 and 880×560. No live collectors, elevation, policy changes or full machine inventory were run for this correction. The collectors, record fields, JSON export function and command-line entry branch were preserved.
