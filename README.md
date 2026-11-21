@@ -146,3 +146,11 @@ The original package reported static Linux inspections only. This local UI incre
 For the preceding sectional UI increment, static contract comparison confirmed 25 existing function bodies, including the collectors, sanitization and export functions, and the `-InventoryOnly` branch were text-identical to the imported version. The subsequent Advanced auditing repair changes only `Collect-Audit` and its source label; the other collectors, record schema, export function and command-line entry branch remain unchanged.
 
 The partial-inventory correction was checked in Windows PowerShell 5.1 using two sample observations and four simulated late collector failures. Checks covered first-run partial publication, filtering without losing partial status, complete/partial switching without mixing records or timestamps, complete-only GUI export availability, overlap prevention, and unexpected interruption with and without a prior snapshot. Layouts passed at 1350×840 and 880×560. No live collectors, elevation, policy changes or full machine inventory were run for this correction. The collectors, record fields, JSON export function and command-line entry branch were preserved.
+
+## Project directory and related work
+
+[Browse the dastardlyrat project directory](https://dastardlyrat.github.io/).
+
+- [LatticeSecurityDashboard](https://github.com/dastardlyrat/LatticeSecurityDashboard)
+- [WindowsFirewallDashboard](https://github.com/dastardlyrat/WindowsFirewallDashboard)
+- [WindowsPowerPlanExplorer](https://github.com/dastardlyrat/WindowsPowerPlanExplorer)
