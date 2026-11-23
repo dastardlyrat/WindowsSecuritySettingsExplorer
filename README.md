@@ -154,3 +154,7 @@ The partial-inventory correction was checked in Windows PowerShell 5.1 using two
 - [LatticeSecurityDashboard](https://github.com/dastardlyrat/LatticeSecurityDashboard)
 - [WindowsFirewallDashboard](https://github.com/dastardlyrat/WindowsFirewallDashboard)
 - [WindowsPowerPlanExplorer](https://github.com/dastardlyrat/WindowsPowerPlanExplorer)
+
+## Public cross-repository discovery
+
+**Public research directory:** [topic map](https://dastardlyrat.github.io/research.html) · [machine-oriented navigation](https://dastardlyrat.github.io/machine.html) · [dated structured catalog](https://dastardlyrat.github.io/research-index.json). The directory indexes public entry points for source-led study; it is not a license override, consent to personal-methodology fingerprinting, or runtime authorization.
